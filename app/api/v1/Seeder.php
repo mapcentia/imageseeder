@@ -22,7 +22,7 @@ class Seeder extends \app\inc\Controller
             $url = $url . "&lifetime=0";
             $seeds[$i] = $this->seed($url);
         }
-        return $seeds;
+        return array("succes"=>true, "result"=>$seeds);
     }
 
     public function post_object()
