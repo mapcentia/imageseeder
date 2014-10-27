@@ -25,7 +25,6 @@ class Seeder extends \app\inc\Controller
             } else {
                 $seeds[$i] = false;
             }
-
         }
         return $seeds;
     }
