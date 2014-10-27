@@ -2,6 +2,7 @@
 namespace app\api\v1;
 
 use \app\inc\Input;
+use \app\inc\Response;
 
 class Seeder extends \app\inc\Controller
 {
@@ -11,32 +12,36 @@ class Seeder extends \app\inc\Controller
     function __construct()
     {
         $this->host = "http://54.171.150.242";
-        $this->obj = json_decode(Input::get(null, true));
     }
 
     public function post_url()
     {
-       // print_r($this->obj);
+        $this->obj = json_decode(Input::get(null, true));
         $seeds = array();
         for ($i = 0; $i < sizeof($this->obj->urls); $i++) {
             $urlObj = $this->obj->urls[$i];
             $url = $urlObj->url . "&lifetime=0";
             $seeds[$i] = $this->seed($url);
         }
-        return array("succes"=>true, "jobId"=>$this->obj->jobId,"result"=>$seeds);
+        return array("succes" => true, "jobId" => $this->obj->jobId, "result" => $seeds);
     }
 
-    public function post_object()
+    public function get_url()
     {
-        for ($i = 0; $i < sizeof($this->urls); $i++) {
-            //print_r($this->urls[$i]);
-            $o = $this->urls[$i];
-            #http://54.171.150.242/api/v1/staticmap/png/nyborg?baselayer=DTKSKAERMKORTDAEMPET&layers=public.nyborg_nabokommuner,public.kommunegraense_streg,kommuneplan13.cykelstier_og_baner&size=500x500&bbox=1169113.8051039393,7394876.782495037,1225447.9239758018,7453351.100295125&lifetime=10
-            $url = "{$this->host}/api/v1/staticmap/png/{$o->db}?baselayer={$o->baseLayers}&layers=kommuneplan13.bevaringsvaerdige_bygninger_i_by&size={$o->size}&bbox={$o->bbox}lifetime=0";
-            echo $url."\n";
-            $seeds[$i] = $this->seed($url);
+        $layers = (array)json_decode(urldecode(Input::get("layers")));
+        $bbox = urldecode(Input::get("bbox"));
+        $db = urldecode(Input::get("db"));
+        $baseLayer = urldecode(Input::get("baseLayer"));
+        $size = urldecode(Input::get("size"));
+        $temp = array();
+        for ($i = 0; $i < sizeof($layers); $i++) {
+            $temp[] = $layers[$i]->name;
         }
-        return $seeds;
+        $layersStr = implode(",", $temp);
+        $url = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}size={$size}&bbox={$bbox}lifetime=0";
+
+        echo Response::passthru("<img class=\"imageseeder\"src=\"{$url}\"/>");
+        exit();
 
     }
 
