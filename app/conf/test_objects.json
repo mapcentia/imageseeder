@@ -1,0 +1,18 @@
+[
+    {
+        "db": "nyborg",
+        "schema": "kommuneplan13",
+        "baseLayer": "dtkSkaermkortDaempet",
+        "size": "500x500",
+        "layers": [{"name":"kommuneplan13.vejnet"}],
+        "bbox": "10.449285,55.154626,10.955343,55.453627"
+    },
+    {
+        "db": "nyborg",
+        "schema": "kommuneplan13",
+        "baseLayer": "dtkSkaermkortDaempet",
+        "size": "500x500",
+        "layers": [{"name":"kommuneplan13.cykelstier_og_baner"}],
+        "bbox": "10.502328,55.169728,11.008386,55.468615"
+    }
+]
