@@ -38,7 +38,7 @@ class Seeder extends \app\inc\Controller
             $temp[] = $layers[$i]->name;
         }
         $layersStr = implode(",", $temp);
-        $url = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}size={$size}&bbox={$bbox}lifetime=0";
+        $url = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}&size={$size}&bbox={$bbox}&lifetime=9999999";
 
         echo Response::passthru("<img class=\"imageseeder\"src=\"{$url}\"/>");
         exit();
