@@ -1,0 +1,41 @@
+<?php
+namespace app\conf;
+
+class App
+{
+    static $param = array(
+        // The hostname of the server
+        "host" => "http://myserver.com",
+
+        // The hostname of the user module. Normally this is the same as the host above
+        "userHostName" => "http://myserver.com",
+
+        //Server path where GeoCLoud is installed.
+        "path" => "/var/www/geocloud2",
+
+        // When creating new databases use this db as template
+        "databaseTemplate" => "template_geocloud",
+
+        // The host of Elasticsearch serveren
+        "esHost" => "http://myserver.com",
+
+        // Encrypt api key in database
+        "encryptSettings" => false,
+
+        // Render backend for tile cache ["wms" | "python"]
+        "tileRenderBackend" => "wms",
+    );
+    function __construct(){
+        // This is the autoload function and include path setting. No need to fiddle with this.
+        spl_autoload_register(function ($className) {
+            $ds = DIRECTORY_SEPARATOR;
+            $dir = App::$param['path'];
+            $className = strtr($className, '\\', $ds);
+            $file = "{$dir}{$className}.php";
+            if (is_readable($file)) {
+                require_once $file;
+            }
+        });
+        set_include_path(get_include_path() . PATH_SEPARATOR . App::$param['path'] . PATH_SEPARATOR . App::$param['path'] . "app" . PATH_SEPARATOR . App::$param['path'] . "app/libs/PEAR/");
+    }
+}
