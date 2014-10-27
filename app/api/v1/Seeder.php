@@ -6,23 +6,24 @@ use \app\inc\Input;
 class Seeder extends \app\inc\Controller
 {
     protected $host;
-    protected $urls;
+    protected $obj;
 
     function __construct()
     {
         $this->host = "http://54.171.150.242";
-        $this->urls = json_decode(Input::get(null, true));
+        $this->obj = json_decode(Input::get(null, true));
     }
 
     public function post_url()
     {
+       // print_r($this->obj);
         $seeds = array();
-        for ($i = 0; $i < sizeof($this->urls); $i++) {
-            $url = $this->urls[$i];
-            $url = $url . "&lifetime=0";
+        for ($i = 0; $i < sizeof($this->obj->urls); $i++) {
+            $urlObj = $this->obj->urls[$i];
+            $url = $urlObj->url . "&lifetime=0";
             $seeds[$i] = $this->seed($url);
         }
-        return array("succes"=>true, "result"=>$seeds);
+        return array("succes"=>true, "jobId"=>$this->obj->jobId,"result"=>$seeds);
     }
 
     public function post_object()
