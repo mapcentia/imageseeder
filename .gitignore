@@ -1,0 +1,26 @@
+app/conf/App.php
+app/conf/Connection.php
+app/conf/hosts.php
+app/tmp/
+node_modules
+
+!app/tmp/.gitignore
+!app/wms/cfgfiles/.gitignore
+!app/wms/mapfiles/.gitignore
+
+
+.idea/
+.vagrant/
+Vagrantfile
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+apasswords
