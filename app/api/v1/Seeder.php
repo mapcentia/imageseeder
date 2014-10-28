@@ -19,8 +19,7 @@ class Seeder extends \app\inc\Controller
         $this->obj = json_decode(Input::get(null, true));
         $seeds = array();
         for ($i = 0; $i < sizeof($this->obj->urls); $i++) {
-            $urlObj = $this->obj->urls[$i];
-            $url = $urlObj->url . "&lifetime=0";
+            $url = $this->obj->urls[$i] . "&lifetime=0";
             $seeds[$i] = $this->seed($url);
         }
         return array("succes" => true, "jobId" => $this->obj->jobId, "result" => $seeds);
