@@ -29,7 +29,7 @@ class Seeder extends \app\inc\Controller
     {
         $layers = (array)json_decode(urldecode(Input::get("layers")));
 
-        $bbox = explode(",", urldecode(Input::get("bbox")));
+        $bbox = (Input::get("bbox")) ? explode(",", urldecode(Input::get("bbox"))) : explode(",", urldecode(Input::get("defaultbbox")));
         $db = urldecode(Input::get("db"));
         $baseLayer = urldecode(Input::get("baselayer"));
         $size = urldecode(Input::get("size"));
