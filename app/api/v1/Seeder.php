@@ -28,7 +28,6 @@ class Seeder extends \app\inc\Controller
     public function get_url()
     {
         $layers = (array)json_decode(urldecode(Input::get("layers")));
-
         $bbox = (Input::get("bbox")) ? explode(",", urldecode(Input::get("bbox"))) : explode(",", urldecode(Input::get("defaultbbox")));
         $db = urldecode(Input::get("db"));
         $baseLayer = urldecode(Input::get("baselayer"));
@@ -49,9 +48,15 @@ class Seeder extends \app\inc\Controller
             $temp[] = $layers[$i]->name;
         }
         $layersStr = implode(",", $temp);
-        $url = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}&size={$size}&bbox={$bboxStr}&lifetime=9999999";
+        $layersStrLegend = implode(";", $temp);
 
-        echo Response::passthru("<img class=\"imageseeder\"src=\"{$url}\"/>");
+
+        $mapUrl = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}&size={$size}&bbox={$bboxStr}&lifetime=9999999";
+        $legendUrlObj = json_decode(file_get_contents("http://cowi.mapcentia.com/api/v1/legend/html/{$db}?l={$layersStrLegend}"));
+        echo Response::passthru(
+            "<img class=\"imageseeder\"src=\"{$mapUrl}\"/>".
+            "<div class=\"legend-graphic\">{$legendUrlObj->html}</div>"
+        );
         exit();
 
     }
