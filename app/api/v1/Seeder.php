@@ -54,11 +54,10 @@ class Seeder extends \app\inc\Controller
         $mapUrl = "{$this->host}/api/v1/staticmap/png/{$db}?baselayer={$baseLayer}&layers={$layersStr}&size={$size}&bbox={$bboxStr}&lifetime=9999999";
         $legendUrlObj = json_decode(file_get_contents("http://cowi.mapcentia.com/api/v1/legend/html/{$db}?l={$layersStrLegend}"));
         echo Response::passthru(
-            "<img class=\"imageseeder\"src=\"{$mapUrl}\"/>".
+            "<div><img class=\"imageseeder\"src=\"{$mapUrl}\"/></div>".
             "<div class=\"legend-graphic\">{$legendUrlObj->html}</div>"
         );
         exit();
-
     }
 
     private function seed($url)
