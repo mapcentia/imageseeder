@@ -11,7 +11,7 @@ class Seeder extends \app\inc\Controller
 
     function __construct()
     {
-        $this->host = "http://54.171.150.242";
+        $this->host = "http://52.18.22.214";
     }
 
     public function post_url()
